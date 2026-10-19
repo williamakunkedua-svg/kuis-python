@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v4
@@ -15,16 +15,16 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.10'
 
-    - name: Install dependencies
+    - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential libssl-dev libffi-dev python3-dev ccache git zip unzip openjdk-17-jdk ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixin-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
-        pip install --upgrade pip setuptools
-        pip install buildozer cython
+        sudo apt-get install -y build-essential ccache git python3-dev libssl-dev libffi-dev libsqlite3-dev zlib1g-dev openjdk-17-jdk zip unzip
+        python -m pip install --upgrade pip setuptools
+        pip install Cython==0.29.33 buildozer
 
-    - name: Build with Buildozer
+    - name: Build APK with Buildozer
       run: |
         buildozer -v android debug
 
